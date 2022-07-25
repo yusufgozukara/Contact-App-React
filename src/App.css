@@ -8,7 +8,12 @@ body{
   background-image: url(https://picsum.photos/1600/900);
   background-size: cover;
   background-repeat: no-repeat;
-  /* background-position: center; */
+
+}
+
+.container{
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .formDiv{
@@ -30,6 +35,7 @@ body{
   border-radius: 10px;
   border: 1px solid gray;
   padding: 5px 15px;
+  cursor: pointer;
 }
 .formDiv button{
 background-color: rgb(243, 173, 42);
@@ -43,7 +49,45 @@ background-color: rgb(243, 173, 42);
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50%;
+  width: 40%;
   height: 100vh;
-  border: 2px solid red;
+}
+
+.tableDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 650px;
+  background-color: white;
+  height: 300px;
+  border-radius: 10px;
+}
+
+.tableContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 100vh;
+}
+
+.table{
+  margin: 20px;
+}
+.table td{
+  width: 20%;
+  text-align: center;  
+}
+
+th, td {
+  border-bottom: 1px solid gray;
+}
+.fa-x{
+  color: red;
+  cursor: pointer;
+}
+.fa-pen-to-square{
+  color: green;
+  cursor: pointer;
 }
