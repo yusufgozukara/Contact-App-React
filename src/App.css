@@ -10,3 +10,40 @@ body{
   background-repeat: no-repeat;
   /* background-position: center; */
 }
+
+.formDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 300px;
+  background-color: white;
+  height: 300px;
+  border-radius: 10px;
+}
+
+.formDiv input, select, button{
+  display: block;
+  margin: 20px 0;
+  width: 250px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  padding: 5px 15px;
+}
+.formDiv button{
+background-color: rgb(243, 173, 42);
+}
+
+.formDiv h1{
+  /* margin: auto; */
+}
+
+.formContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100vh;
+  border: 2px solid red;
+}
