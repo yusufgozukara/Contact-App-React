@@ -1,12 +1,74 @@
+import { useEffect, useState } from 'react';
 import './App.css';
 import Form from './components/form/Form';
 import Table from './components/table/Table';
+import { ContactContext } from './context/ContactContext';
+import {db} from './store/firebaseConfig';
+import {collection, getDocs} from 'firebase/firestore';
 
 function App() {
+
+
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [gender, setGender] = useState('');
+  const [contact, setContact] = useState([]);
+  const [editActive, setEditActive] = useState(false);
+  const [editId, setEditId] = useState('');
+
+  const contactCollectionRef = collection(db, 'contacts')
+  const getContactDb = async () => {
+    const data = await getDocs(contactCollectionRef);
+    console.log(data);
+    setContact(data.docs.map((doc) => ({...doc.data(), id:doc.id})))
+  }
+
+  useEffect(() => {
+    getContactDb();
+
+  }, [])
+  
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newObj = {name:name, phone:phone, gender:gender, id:new Date().getTime()}
+    console.log(newObj.id);
+    setContact([...contact, newObj])
+    setName('');
+    setPhone('');
+    setGender('');
+    
+  }
+
+  const handleDelete = (id) => {
+    setContact(contact.filter((user)=> user.id!==id ))
+  }
+
+  const handleEdit = (user) => {
+    setEditActive(true)
+    setName(user.name);
+    setEditId(user.id)
+    setPhone(user.phone);
+    setGender(user.gender);
+  }
+
+  const editContact = (e) => {
+    e.preventDefault();
+   (contact.filter((con) => con.id == editId)).map((con) => {con.name=name; con.phone=phone; con.gender=gender})
+    setEditActive(false);
+    setName('');
+    setPhone('');
+    setGender('');
+    setEditId('');
+  }
+
   return (
     <div className='container'>
+      <ContactContext.Provider value={{name, setName, phone, setPhone, gender, setGender, handleSubmit, contact, setContact, handleDelete, handleEdit,editActive, setEditActive, editContact}}>
       <Form/>
       <Table/>
+      </ContactContext.Provider>
     </div>
   );
 }
