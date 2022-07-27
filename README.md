@@ -1,7 +1,7 @@
-#My contact app with React and Firebase
+# My contact app with React and Firebase
 
-You can check my project in this link
-[Please Click Here](https://contact-app-react-firebase.netlify.app/)
+## You can check my project in this link
+## [Please Click Here](https://contact-app-react-firebase.netlify.app/)
 
 
 # Getting Started with Create React App
