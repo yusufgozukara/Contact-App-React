@@ -92,8 +92,6 @@ th, td {
   color: green;
   cursor: pointer;
 }
-
-
 @media(max-width:800px){
   .container{
     display: flex;
