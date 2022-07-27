@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { ContactContext } from '../../context/ContactContext'
 
 const Table = () => {
-    const {contact, setContact, handleDelete,handleEdit} = useContext(ContactContext);
+    const {contact, handleDelete,handleEdit} = useContext(ContactContext);
 
   return (
     <div className='tableContainer'>

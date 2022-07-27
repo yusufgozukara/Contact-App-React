@@ -4,7 +4,7 @@ import Form from './components/form/Form';
 import Table from './components/table/Table';
 import { ContactContext } from './context/ContactContext';
 import {db} from './store/firebaseConfig';
-import {collection, getDocs} from 'firebase/firestore';
+import {collection, getDocs, addDoc, deleteDoc, doc, updateDoc} from 'firebase/firestore';
 
 function App() {
 
@@ -16,10 +16,13 @@ function App() {
   const [editActive, setEditActive] = useState(false);
   const [editId, setEditId] = useState('');
 
+  // const [newName, setNewName] = useState('');
+  // const [newAge, setNewAge] = useState('');
+ 
+
   const contactCollectionRef = collection(db, 'contacts')
   const getContactDb = async () => {
     const data = await getDocs(contactCollectionRef);
-    console.log(data);
     setContact(data.docs.map((doc) => ({...doc.data(), id:doc.id})))
   }
 
@@ -41,8 +44,12 @@ function App() {
     
   }
 
-  const handleDelete = (id) => {
-    setContact(contact.filter((user)=> user.id!==id ))
+  const handleDelete = async (id) => {
+    console.log(id);
+    setContact(contact.filter((user)=> user.id!==id ));
+    const userDoc = doc(db, 'contacts', id);
+    await deleteDoc(userDoc);
+    // getContactDb();   ** doğrusu bu...
   }
 
   const handleEdit = (user) => {
@@ -53,19 +60,36 @@ function App() {
     setGender(user.gender);
   }
 
-  const editContact = (e) => {
+  // const editContact = async (e, id, name, phone, gender) => {
+  //   e.preventDefault();
+  //  (contact.filter((con) => con.id == editId)).map((con) => {con.name=name; con.phone=phone; con.gender=gender})
+  //   setEditActive(false);
+  //   setName('');
+  //   setPhone('');
+  //   setGender('');
+  //   setEditId('');
+  // }
+  const editContact = async(e) => {
     e.preventDefault();
-   (contact.filter((con) => con.id == editId)).map((con) => {con.name=name; con.phone=phone; con.gender=gender})
-    setEditActive(false);
-    setName('');
-    setPhone('');
-    setGender('');
-    setEditId('');
+  //  (contact.filter((con) => con.id == editId)).map((con) => {con.name=name; con.phone=phone; con.gender=gender})
+  const userDoc = doc(db, 'contacts', editId);
+  const newUser = {name:name, phone:phone, gender:gender}
+  await updateDoc(userDoc,newUser)
+  getContactDb();
+  setName('');
+  setPhone('');
+  setGender('');
+  setEditId('');
+  setEditActive(false);
+  }
+
+  const createUser = async () => {
+    await addDoc(contactCollectionRef, {name: name, phone: phone, gender:gender });
   }
 
   return (
     <div className='container'>
-      <ContactContext.Provider value={{name, setName, phone, setPhone, gender, setGender, handleSubmit, contact, setContact, handleDelete, handleEdit,editActive, setEditActive, editContact}}>
+      <ContactContext.Provider value={{name, setName, phone, setPhone, gender, setGender, handleSubmit, contact, setContact, handleDelete, handleEdit,editActive, setEditActive, editContact, createUser}}>
       <Form/>
       <Table/>
       </ContactContext.Provider>
