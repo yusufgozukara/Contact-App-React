@@ -4,6 +4,7 @@ import { ContactContext } from '../../context/ContactContext'
 const Table = () => {
     const {contact, handleDelete,handleEdit} = useContext(ContactContext);
 
+    console.log(contact);
   return (
     <div className='tableContainer'>
         <div className="tableDiv">
@@ -19,8 +20,8 @@ const Table = () => {
                 </tr>
                 </thead>
                 <tbody>
-
-                {contact.map((user) => (
+                
+                {contact.length > 0 ? contact.map((user) => (
                     
                     <tr key={user.id}>
                     <td>{user.name}</td>
@@ -29,7 +30,7 @@ const Table = () => {
                     <td onClick={() => handleDelete(user.id)}><i className="fa-solid fa-x"></i></td>
                     <td onClick={() => handleEdit(user)}><i className="fa-solid fa-pen-to-square"></i></td>
                 </tr>
-                ))}
+                )) : <tr><td colSpan='6'>Please add a new contact</td></tr>}
 
                 
                 </tbody>
