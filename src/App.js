@@ -5,10 +5,13 @@ import Table from './components/table/Table';
 import { ContactContext } from './context/ContactContext';
 import {db} from './store/firebaseConfig';
 import {collection, getDocs, addDoc, deleteDoc, doc, updateDoc} from 'firebase/firestore';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {toastSuccessNotify} from './utils/customToastify';
 
 function App() {
 
-
+  const notify = () => toast("Wow so easy!");
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [gender, setGender] = useState('');
@@ -41,6 +44,7 @@ function App() {
     setName('');
     setPhone('');
     setGender('');
+    toastSuccessNotify('You added successfully');
     
   }
 
@@ -50,6 +54,7 @@ function App() {
     const userDoc = doc(db, 'contacts', id);
     await deleteDoc(userDoc);
     // getContactDb();   ** doğrusu bu...
+    
   }
 
   const handleEdit = (user) => {
@@ -58,6 +63,7 @@ function App() {
     setEditId(user.id)
     setPhone(user.phone);
     setGender(user.gender);
+    
   }
 
   // const editContact = async (e, id, name, phone, gender) => {
@@ -81,6 +87,7 @@ function App() {
   setGender('');
   setEditId('');
   setEditActive(false);
+  toastSuccessNotify('Changed successfully');
   }
 
   const createUser = async () => {
@@ -89,9 +96,11 @@ function App() {
 
   return (
     <div className='container'>
+      
       <ContactContext.Provider value={{name, setName, phone, setPhone, gender, setGender, handleSubmit, contact, setContact, handleDelete, handleEdit,editActive, setEditActive, editContact, createUser}}>
       <Form/>
       <Table/>
+      <ToastContainer />
       </ContactContext.Provider>
     </div>
   );
