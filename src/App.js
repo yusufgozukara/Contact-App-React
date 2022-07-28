@@ -19,9 +19,6 @@ function App() {
   const [editActive, setEditActive] = useState(false);
   const [editId, setEditId] = useState('');
 
-  // const [newName, setNewName] = useState('');
-  // const [newAge, setNewAge] = useState('');
- 
 
   const contactCollectionRef = collection(db, 'contacts')
   const getContactDb = async () => {
@@ -34,7 +31,6 @@ function App() {
 
   }, [])
   
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -66,18 +62,8 @@ function App() {
     
   }
 
-  // const editContact = async (e, id, name, phone, gender) => {
-  //   e.preventDefault();
-  //  (contact.filter((con) => con.id == editId)).map((con) => {con.name=name; con.phone=phone; con.gender=gender})
-  //   setEditActive(false);
-  //   setName('');
-  //   setPhone('');
-  //   setGender('');
-  //   setEditId('');
-  // }
   const editContact = async(e) => {
     e.preventDefault();
-  //  (contact.filter((con) => con.id == editId)).map((con) => {con.name=name; con.phone=phone; con.gender=gender})
   const userDoc = doc(db, 'contacts', editId);
   const newUser = {name:name, phone:phone, gender:gender}
   await updateDoc(userDoc,newUser)
