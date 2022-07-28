@@ -105,4 +105,10 @@ th, td {
   .tableContainer{
     width: 90%;
   }
+  .formContainer{
+    height: 50vh;
+  }
+  .tableContainer{
+    height: 50vh;
+  }
 }
